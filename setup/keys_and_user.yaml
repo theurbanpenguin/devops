@@ -33,4 +33,4 @@
     - name: Trust Local SSH Host
       become: true
       shell:
-        name: ssh-keyscan -4 localhost -t rsa | tee /etc/ssh/ssh_known_hosts
+        cmd: ssh-keyscan -4 localhost -t rsa | tee /etc/ssh/ssh_known_hosts
