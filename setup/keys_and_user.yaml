@@ -22,4 +22,4 @@
         user: git
         state: present
         manage_dir: true
-        key: '{{ lookup("file", /home/labadmin/.ssh/id_rsa.pub") }}'
+        key: '{{ lookup("file", "/home/labadmin/.ssh/id_rsa.pub") }}'
