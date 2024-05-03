@@ -1,7 +1,7 @@
 ---
 - name: Ensure No Password for Sudo and labadmin
   hosts: localhost
-  become: false
+  become: true
   gather_facts: true
   tasks:
     - name: Add sudoers entry for labadmin user account
