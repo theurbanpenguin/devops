@@ -23,3 +23,8 @@
         state: present
         manage_dir: true
         key: '{{ lookup("file", "/home/labadmin/.ssh/id_rsa.pub") }}'
+    - name: Install OpenSSH Server
+      become: true
+      package:
+        name: openssh-server
+        state: installed
