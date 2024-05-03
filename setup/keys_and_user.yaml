@@ -1,0 +1,25 @@
+---
+- name: Configure SSH User and Keys for Git Repo
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Create Local Key Pair for labadmin user
+      user:
+        name: labadmin
+        generate_ssh_key: true
+    - name: Create Git User
+      become: true
+      user:
+        name: git
+        shell: /usr/bin/bash
+        create_home: true
+        password: "{{ 'Passw0rd!' | password_hash('sha512') }}"
+        update_password: on_create
+    - name: Authorize LabAdmin to login via SSH as Git using Key
+      become: true
+      authorized_key:
+        user: git
+        state: present
+        manage_dir: true
+        key: '{{ lookup("file", /home/labadmin/.ssh/id_rsa.pub") }}'
