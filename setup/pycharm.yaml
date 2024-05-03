@@ -1,0 +1,10 @@
+---
+- name: Ensure Pycharm is installed
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install Pycharm
+      snap:
+        name: pycharm-community
+        classic: true

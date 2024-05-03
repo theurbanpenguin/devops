@@ -1,0 +1,12 @@
+---
+- name: Ensure PS1 Prompt Variable set
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Set the PS1 Prompt
+      lineinfile:
+        path: ~/.bashrc
+        regexp: "^export PS1="
+        line: export PS1="\u@ubuntu \w \$ "
+        insertafter: EOF
