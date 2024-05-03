@@ -16,3 +16,8 @@
         dest: /etc/sudoers.d/labadmin
         content: 'labadmin ALL=(root) NOPASSWD: ALL'
         validate: visudo -cf %s
+    - name: Install Pycharm
+      become: true
+      snap:
+        name: pycharm-community
+        classic: true
