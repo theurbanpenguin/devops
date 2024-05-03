@@ -25,6 +25,8 @@
         key: '{{ lookup("file", "/home/labadmin/.ssh/id_rsa.pub") }}'
     - name: Install OpenSSH Server
       become: true
-      package:
+      apt:
         name: openssh-server
-        state: installed
+        state: present
+        update_cache: true
+        cache_valid_time: 86400
