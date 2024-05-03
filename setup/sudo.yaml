@@ -1,0 +1,11 @@
+---
+- name: Ensure No Password for Sudo and labadmin
+  hosts: localhost
+  become: false
+  gather_facts: true
+  tasks:
+    - name: Add sudoers entry for labadmin user account
+      copy:
+        dest: /etc/sudoers.d/labadmin
+        content: 'labadmin ALL=(root) NOPASSWD: ALL'
+        validate: visudo -cf %s
