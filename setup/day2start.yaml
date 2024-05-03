@@ -18,7 +18,7 @@
         validate: visudo -cf %s
     - name: Delete broken repo
       file:
-        path: /etc/apt/sources-list.d/ansible-ubuntu-ansible-noble-sources
+        path: /etc/apt/sources.list.d/ansible-ubuntu-ansible-noble-sources
         state: absent
     - name: Install Pycharm
       become: true
