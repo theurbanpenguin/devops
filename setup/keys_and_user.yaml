@@ -30,3 +30,7 @@
         state: present
         update_cache: true
         cache_valid_time: 86400
+    - name: Trust Local SSH Host
+      become: true
+      shell:
+        name: ssh-keyscan -4 localhost -t rsa | tee /etc/ssh/ssh_known_hosts
