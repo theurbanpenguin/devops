@@ -56,7 +56,7 @@
         path: /etc/ssh/ssh_config
         regexp: "^StrictHostKeyChecking"
         line: StrictHostKeyChecking no
-        insertafter: "^#\s*StrictHostKeyChecking"
+        insertafter: "^# *StrictHostKeyChecking"
 
     - name: Create Config for Ansible
       copy:
