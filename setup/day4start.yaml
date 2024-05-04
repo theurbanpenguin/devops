@@ -97,4 +97,4 @@
     - name: Configure Key Pair
       user:
         name: labadmin
-        generate_ssh_key_pair: true
+        generate_ssh_key: true
