@@ -98,3 +98,10 @@
       user:
         name: labadmin
         generate_ssh_key: true
+
+    - name: Allow SSH Authentication key for local account to git account
+      authorized_key:
+        user: git
+        state: present
+        manage_dir: true
+        key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
