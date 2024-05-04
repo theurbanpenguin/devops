@@ -31,6 +31,7 @@
         classic: true
 
     - name: Create Git User
+      become: true
       user:
         name: git
         shell: /usr/bin/bash
@@ -39,6 +40,7 @@
         update_password: on_create
 
     - name: Install the SSH Server and Apache
+      become: true
       apt:
         name:
           - openssh-server
