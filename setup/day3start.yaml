@@ -1,0 +1,72 @@
+---
+- name: Day Two Start Settings
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Set the PS1 Prompt
+      lineinfile:
+        path: ~/.bashrc
+        regexp: "^export PS1="
+        line: export PS1="\u@ubuntu \w \$ "
+        insertafter: EOF
+
+    - name: Add sudoers entry for labadmin user account
+      become: true
+      copy:
+        dest: /etc/sudoers.d/labadmin
+        content: 'labadmin ALL=(root) NOPASSWD: ALL'
+        validate: visudo -cf %s
+
+    - name: Delete broken repo
+      become: true
+      file:
+        path: /etc/apt/sources.list.d/ansible-ubuntu-ansible-noble.sources
+        state: absent
+
+    - name: Install Pycharm
+      become: true
+      snap:
+        name: pycharm-community
+        classic: true
+
+    - name: Create Git User
+      user:
+        name: git
+        shell: /usr/bin/bash
+        create_home: true
+        password: "{{ 'Passw0rd!' | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Install the SSH Server and Apache
+      apt:
+        name:
+          - openssh-server
+          - apache2
+        state: present
+        update_cache: true
+        cache_valid_time: 86400
+
+    - name: Create Config for Ansible
+      copy:
+        dest: ~/.ansible.cfg
+        content: |
+          [defaults]
+          host_key_checking = false
+          inventory = /home/labadmin/.hosts.ini
+
+    - name: Create Sample Ansible Inventory
+      copy:
+        dest: ~/hosts.ini
+        content: |
+          [ubuntu]
+          localhost
+          [ubuntu:vars]
+          ansible_connection = local
+          ansible_python_interpreter = /usr/bin/python3
+          web_pkg = apache2
+          [rocky]
+          rocky1
+          rocky2
+          [rocky:vars]
+          web_pkg = httpd
