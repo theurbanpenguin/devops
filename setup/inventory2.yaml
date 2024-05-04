@@ -1,0 +1,28 @@
+---
+- name: Ansible Config and Inventory
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Create Config for Ansible
+      copy:
+        dest: ~/.ansible.cfg
+        content: |
+          [defaults]
+          host_key_checking = false
+          inventory = /home/labadmin/.hosts.ini
+    - name: Create Sample Ansible Inventory
+      copy:
+        dest: ~/hosts.ini
+        content: |
+          [ubuntu]
+          localhost
+          [ubuntu:vars]
+          ansible_connection = local
+          ansible_python_interpreter = /usr/bin/python3
+          web_pkg = apache2
+          [rocky]
+          rocky1
+          rocky2
+          [rocky:vars]
+          web_pkg = httpd

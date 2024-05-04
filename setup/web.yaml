@@ -1,0 +1,10 @@
+---
+- name: Install Apache Web Server
+  hosts: ubuntu
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install Apache Web Server Task
+      package:
+        name: '{{ web_pkg }}'
+        state: present
