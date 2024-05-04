@@ -100,6 +100,7 @@
         generate_ssh_key: true
 
     - name: Allow SSH Authentication key for local account to git account
+      become: true
       authorized_key:
         user: git
         state: present
