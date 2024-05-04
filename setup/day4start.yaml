@@ -1,5 +1,5 @@
 ---
-- name: Day Three Start Settings
+- name: Day Four Start Settings
   hosts: localhost
   become: false
   gather_facts: false
@@ -45,9 +45,18 @@
         name:
           - openssh-server
           - apache2
+          - python3-venv
         state: present
         update_cache: true
         cache_valid_time: 86400
+
+    - name: Dont Prompt for SSH Keys
+      become: true
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: "^StrictHostKeyChecking"
+        line: StrictHostKeyChecking no
+        insertafter: "^#\s*StrictHostKeyChecking"
 
     - name: Create Config for Ansible
       copy:
@@ -72,3 +81,15 @@
           rocky2
           [rocky:vars]
           web_pkg = httpd
+
+    - name: Git Email
+      git_config:
+        name: user.email
+        value: tux@example.com
+        scope: global
+
+    - name: Git Username
+      git_config:
+        name: user.name
+        value: Tux Penguin
+        scope: global
