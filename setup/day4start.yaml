@@ -93,3 +93,8 @@
         name: user.name
         value: Tux Penguin
         scope: global
+
+    - name: Configure Key Pair
+      user:
+        name: labadmin
+        generate_ssh_key_pair: true
