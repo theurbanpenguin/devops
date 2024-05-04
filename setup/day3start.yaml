@@ -55,7 +55,7 @@
         content: |
           [defaults]
           host_key_checking = false
-          inventory = /home/labadmin/.hosts.ini
+          inventory = /home/labadmin/hosts.ini
 
     - name: Create Sample Ansible Inventory
       copy:
