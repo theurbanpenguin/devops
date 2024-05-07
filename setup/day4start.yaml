@@ -106,3 +106,9 @@
         state: present
         manage_dir: true
         key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
+    - name: Trust Local SSH Host
+      become: true
+      shell:
+        cmd: ssh-keyscan -4 localhost -t rsa | tee /etc/ssh/ssh_known_hosts
+
+
