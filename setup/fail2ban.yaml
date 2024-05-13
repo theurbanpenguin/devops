@@ -1,0 +1,30 @@
+---
+- name: Manage SSH Connection to System
+  hosts: localhost
+  become: true
+  gather_facts: false
+  tasks:
+
+    - name: Install Fail2Ban Firewall Manager
+      package:
+        name: fail2ban
+
+    - name: Create Jail to Block Bad Logins
+      copy:
+        notify: restart fail2ban
+        dest: /etc/fail2ban/jail.d/sshd.conf
+        content: |
+          [sshd]
+          enabled = true
+          port = ssh
+          filter = sshd
+          logpath = /var/log/auth.log
+          maxretry = 5
+          bantime = 86400
+
+  handlers:
+    - name: restart fail2ban
+      service:
+        name: fail2ban
+        state: restarted
+

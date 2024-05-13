@@ -1,0 +1,21 @@
+---
+- name: Day Two Start Settings
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Create Config for Ansible
+      copy:
+        dest: ~/.ansible.cfg
+        content: |
+          [defaults]
+          host_key_checking = false
+    - name: Create Sample Ansible Inventory
+      copy:
+        dest: ~/hosts.ini
+        content: |
+          [ubuntu]
+          localhost
+          [rocky]
+          rocky1
+          rocky2
