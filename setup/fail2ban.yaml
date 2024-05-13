@@ -10,18 +10,10 @@
         name: fail2ban
 
     - name: Create Jail to Block Bad Logins
-      copy:
+      template:
         dest: /etc/fail2ban/jail.d/sshd.conf
-        content: |
-          [sshd]
-          enabled = true
-          port = ssh
-          filter = sshd
-          logpath = /var/log/auth.log
-          maxretry = 5
-          bantime = 86400
-        register: template
-        notify: restart fail2ban
+        src: sshd.conf.j2
+      notify: restart fail2ban
 
   handlers:
     - name: restart fail2ban
