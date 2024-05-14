@@ -43,3 +43,12 @@
           rocky2
           [ubuntu:vars]
           ansible_connection = local
+
+    - name: Create Git User
+      become: true
+      user:
+        name: git
+        shell: /usr/bin/bash
+        create_home: true
+        password: "{{ 'Passw0rd!' | password_hash('sha512') }}"
+        update_password: on_create
