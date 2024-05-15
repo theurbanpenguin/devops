@@ -1,0 +1,108 @@
+---
+- name: Day Four Start Settings
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Set the PS1 Prompt
+      lineinfile:
+        path: ~/.bashrc
+        regexp: "^export PS1="
+        line: export PS1="\u@ubuntu \w \$ "
+        insertafter: EOF
+
+    - name: Add sudoers entry for labadmin user account
+      become: true
+      copy:
+        dest: /etc/sudoers.d/labadmin
+        content: 'labadmin ALL=(root) NOPASSWD: ALL'
+        validate: visudo -cf %s
+
+    - name: Delete broken repo
+      become: true
+      file:
+        path: /etc/apt/sources.list.d/ansible-ubuntu-ansible-noble.sources
+        state: absent
+
+    - name: Create Git User
+      become: true
+      user:
+        name: git
+        shell: /usr/bin/bash
+        create_home: true
+        password: "{{ 'Passw0rd!' | password_hash('sha512') }}"
+        update_password: on_create
+
+    - name: Install the SSH Server and Apache
+      become: true
+      apt:
+        name:
+          - openssh-server
+          - python3-venv
+          - python3-pip
+        state: present
+        update_cache: true
+        cache_valid_time: 86400
+
+    - name: Dont Prompt for SSH Keys
+      become: true
+      lineinfile:
+        path: /etc/ssh/ssh_config
+        regexp: "^StrictHostKeyChecking.*"
+        line: StrictHostKeyChecking no
+        insertafter: "^# *StrictHostKeyChecking"
+
+    - name: Create Config for Ansible
+      copy:
+        dest: ~/.ansible.cfg
+        content: |
+          [defaults]
+          host_key_checking = false
+          inventory = /home/labadmin/hosts.ini
+
+    - name: Create Sample Ansible Inventory
+      copy:
+        dest: ~/hosts.ini
+        content: |
+          [ubuntu]
+          localhost
+          [ubuntu:vars]
+          ansible_connection = local
+          ansible_python_interpreter = /usr/bin/python3
+          web_pkg = apache2
+          [rocky]
+          rocky1
+          rocky2
+          [rocky:vars]
+          web_pkg = httpd
+
+    - name: Git Email
+      git_config:
+        name: user.email
+        value: tux@example.com
+        scope: global
+
+    - name: Git Username
+      git_config:
+        name: user.name
+        value: Tux Penguin
+        scope: global
+
+    - name: Configure Key Pair
+      user:
+        name: labadmin
+        generate_ssh_key: true
+
+    - name: Allow SSH Authentication key for local account to git account
+      become: true
+      authorized_key:
+        user: git
+        state: present
+        manage_dir: true
+        key: '{{ lookup("file", lookup("env", "HOME") + "/.ssh/id_rsa.pub") }}'
+    - name: Trust Local SSH Host
+      become: true
+      shell:
+        cmd: ssh-keyscan -4 localhost -t rsa | tee /etc/ssh/ssh_known_hosts
+
+
