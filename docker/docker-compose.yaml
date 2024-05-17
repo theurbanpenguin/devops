@@ -15,7 +15,7 @@ services:
   mysql-client:
     image: mysql:latest
     container_name: mysql-client
-    command: ["mysql", "-h", "mysql-server", "-u", "myuser", "-p"]
+    entrypoint: ["bash"]
     networks:
       - my_network
     stdin_open: true
