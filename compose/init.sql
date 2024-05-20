@@ -3395,3 +3395,9 @@ INSERT INTO suppliers VALUES ('26', 'Pasta Buttini s.r.l.', 'Giovanni Giudici', 
 INSERT INTO suppliers VALUES ('27', 'Escargots Nouveaux', 'Marie Delamare', 'Sales Manager', '22, rue H. Voiron', 'Montceau', null, '71300', 'France', '85.57.00.07', null, null);
 INSERT INTO suppliers VALUES ('28', 'Gai pâturage', 'Eliane Noz', 'Sales Representative', 'Bat. B\r\n3, rue des Alpes', 'Annecy', null, '74000', 'France', '38.76.98.06', '38.76.98.58', null);
 INSERT INTO suppliers VALUES ('29', 'Forêts d\'érables', 'Chantal Goulet', 'Accounting Manager', '148 rue Chasseur', 'Ste-Hyacinthe', 'Québec', 'J2S 7S8', 'Canada', '(514) 555-2955', '(514) 555-2921', null);
+
+-- Grant all privileges on the database to myuser
+GRANT ALL PRIVILEGES ON northwind.* TO 'myuser'@'%';
+
+-- Flush privileges to ensure that all changes made so far are saved
+FLUSH PRIVILEGES;
