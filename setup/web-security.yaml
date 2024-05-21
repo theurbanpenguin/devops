@@ -26,5 +26,5 @@
   handlers:
     - name: restart apache
       service:
-        name: "web_pkg"
+        name: "{{ web_pkg }}"
         state: restarted
