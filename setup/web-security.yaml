@@ -11,7 +11,7 @@
       lineinfile:
         path: "{{ web_conf }}"
         regexp: '^ServerSignature'
-        line: 'ServerSignature On'
+        line: 'ServerSignature Off'
         state: present
       notify: restart apache
 
