@@ -11,7 +11,7 @@
       lineinfile:
         path: "{{ web_conf }}"
         regexp: '^ServerSignature'
-        line: 'ServerSignature On'
+        line: 'ServerSignature Off'
         state: present
       notify: restart apache
 
@@ -19,7 +19,7 @@
       lineinfile:
         path: /etc/apache2/conf-enabled/security.conf
         regexp: '^ServerTokens'
-        line: 'ServerTokens OS'
+        line: 'ServerTokens Prod'
         state: present
       notify: restart apache
 
