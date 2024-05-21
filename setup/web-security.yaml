@@ -17,7 +17,7 @@
 
     - name: Ensure ServerTokens is Prod
       lineinfile:
-        path: /etc/apache2/conf-enabled/security.conf
+        path: "{{ web_conf }}"
         regexp: '^ServerTokens'
         line: 'ServerTokens Prod'
         state: present
