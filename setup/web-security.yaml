@@ -1,0 +1,30 @@
+---
+- name: Configure Apache Security Settings
+  hosts: localhost
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install Apache Web Server
+      package:
+        name: "{{ web_pkg }}"
+    - name: Ensure ServerSignature is Off
+      lineinfile:
+        path: "{{ web_conf }}"
+        regexp: '^ServerSignature'
+        line: 'ServerSignature On'
+        state: present
+      notify: restart apache
+
+    - name: Ensure ServerTokens is Prod
+      lineinfile:
+        path: /etc/apache2/conf-enabled/security.conf
+        regexp: '^ServerTokens'
+        line: 'ServerTokens OS'
+        state: present
+      notify: restart apache
+
+  handlers:
+    - name: restart apache
+      service:
+        name: "web_pkg"
+        state: restarted
