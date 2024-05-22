@@ -1,7 +1,12 @@
 services:
   web:
+    container_name: web
     image: nginx
     ports:
       - 8080:80
     volumes:
       - ./html:/usr/share/nginx/html
+  client:
+    container_name: client
+    hostname: client
+    image: nginx

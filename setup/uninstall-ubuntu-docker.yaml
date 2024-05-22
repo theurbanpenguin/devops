@@ -12,11 +12,17 @@
           - docker-compose
           - docker-compose-v2
           - containerd
+          - runc
 
+    - name: Ensure directories are removed
 
- for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+    - name: Remove /var/lib/docker directory
+      file:
+        path: /var/lib/docker
+        state: absent
 
+    - name: Remove /var/lib/containerd directory
+      file:
+        path: /var/lib/containerd
+        state: absent
 
-
- sudo rm -rf /var/lib/docker
- sudo rm -rf /var/lib/containerd
