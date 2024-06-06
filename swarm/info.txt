@@ -1,0 +1,22 @@
+docker info | grep Swarm
+docker swarm init
+docker info | grep Swarm
+docker service create --name nginx-service --replicas 2 -p 8080:80 nginx:1.26.1
+docker service ls
+docker service ps nginx-service
+curl 127.0.0.1:8080
+curl -I 127.0.0.1:8080
+
+docker service update \
+  --image nginx:1.21.0 \
+  --update-parallelism 1 \
+  --update-delay 10s \
+  nginx-service
+
+docker service ls
+docker services ps nginx-service
+
+curl 127.0.0.1:8080
+curl -I 127.0.0.1:8080
+
+
