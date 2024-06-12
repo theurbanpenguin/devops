@@ -1,7 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-# Configuration
+# Configuration settings
 username = "theurbanpenguin"
 token = "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"  # This will be deleted
 repo_name = "new-repo"

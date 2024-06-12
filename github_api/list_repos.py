@@ -1,7 +1,8 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-# Configuration
+
+# Configuration settings
 username = "theurbanpenguin"
 token = "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"  # Generate a personal access token from GitHub
 api_url = "https://api.github.com/user/repos"
