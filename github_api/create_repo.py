@@ -3,7 +3,7 @@ from requests.auth import HTTPBasicAuth
 
 # Configuration settings
 username = "theurbanpenguin"
-token = "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"  # This will be deleted
+token = "ghp_im83xx11iCcWQwM"  # This will be deleted
 repo_name = "new-repo"
 api_url = "https://api.github.com/user/repos"
 
